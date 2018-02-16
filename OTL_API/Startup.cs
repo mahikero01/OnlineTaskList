@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OTL_API.Entities;
+using OTL_API.Services;
 
 namespace OTL_API
 {
@@ -33,6 +34,8 @@ namespace OTL_API
             var connectionString = Startup.Configuration["ConnectionStrings:TaskListDBConnectionString"];
 
             services.AddDbContext<TaskListContext>(o => o.UseSqlServer(connectionString));
+
+            services.AddScoped <IOnlineTaskListRepository, OnlineTaskListRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
