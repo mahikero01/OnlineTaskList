@@ -49,7 +49,13 @@ namespace OTL_API
             //This is for Seeding comment this when ading migration, comment this out when creating new migration
             taskListContext.EnsureSeedDataForContext();
 
-            app.UseMvc();
+            AutoMapper.Mapper.Initialize(
+                    cfg =>
+                    {
+                        cfg.CreateMap<Entities.TaskList, Models.TaskListDTO>();
+                    });
+
+                        app.UseMvc();
         }
     }
 }

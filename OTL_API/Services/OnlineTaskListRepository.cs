@@ -17,27 +17,37 @@ namespace OTL_API.Services
 
         public bool Save()
         {
-            throw new NotImplementedException();
+            return (_ctx.SaveChanges() >= 0);
+        }
+
+        public bool UserIDExist(int userID)
+        {
+            return _ctx.TaskLists.Any(t => t.UserID == userID);
+        }
+
+        public IEnumerable<TaskList> ReadUserTasks(int userID)
+        {
+            return _ctx.TaskLists
+                    .Where(t => t.UserID == userID)
+                    .OrderBy(t => t.DateCreated)
+                    .ToList();
+        }
+
+        public TaskList ReadUserTask(int userID, Guid taskId)
+        {
+            return _ctx.TaskLists
+                    .Where(t => t.UserID == userID && t.TaskListID == taskId)
+                    .FirstOrDefault();
         }
 
         public void CreateTask(TaskList taskList)
         {
-            throw new NotImplementedException();
-        }
-
-        public TaskList ReadTask(Guid taskListId)
-        {
-            return _ctx.TaskLists.Where(t => t.TaskListID == taskListId).FirstOrDefault();
-        }
-
-        public IEnumerable<TaskList> ReadTasks()
-        {
-            return _ctx.TaskLists.OrderBy(t => t.DateCreated).ToList();
+            _ctx.TaskLists.Add(taskList);
         }
 
         public void DeleteTask(TaskList taskList)
         {
-            throw new NotImplementedException();
+            _ctx.TaskLists.Remove(taskList);
         }
     }
 }

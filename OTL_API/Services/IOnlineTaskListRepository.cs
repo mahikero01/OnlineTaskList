@@ -10,9 +10,11 @@ namespace OTL_API.Services
     {
         bool Save();
 
-        IEnumerable<TaskList> ReadTasks();
+        bool UserIDExist(int userID);
 
-        TaskList ReadTask(Guid taskId);
+        IEnumerable<TaskList> ReadUserTasks(int userID);
+
+        TaskList ReadUserTask(int userID, Guid taskId);
 
         void CreateTask(TaskList taskList);
 
