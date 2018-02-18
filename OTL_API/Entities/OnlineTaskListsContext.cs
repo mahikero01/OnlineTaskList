@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace OTL_API.Entities
 {
-    public class TaskListContext : DbContext
+    public class OnlineTaskListsContext : DbContext
     {
-        public TaskListContext(DbContextOptions<TaskListContext> options) : base(options)
+        public OnlineTaskListsContext(DbContextOptions<OnlineTaskListsContext> options) : base(options)
         {
             //Comment below for using add-migration or changing the tables
             Database.Migrate();
         }
 
-        public DbSet<TaskList> TaskLists { get; set; }
+        public DbSet<UserTask> UserTasks { get; set; }
     }
 }

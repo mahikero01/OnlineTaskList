@@ -1,16 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OTL_API.Models
+namespace OTL_API.Entities
 {
-    public class TaskListDTO
+    [Table("UserTasks")]
+    public class UserTask
     {
-        public Guid TaskListID { get; set; }
+        [Key]
+        public Guid UserTaskID { get; set; }
+
+        public int UserID { get; set; }
 
         public String Title { get; set; }
 
+        [MaxLength(50)]
         public String Description { get; set; }
 
         public DateTime DateCreated { get; set; }

@@ -10,9 +10,9 @@ using System;
 
 namespace OTL_API.Migrations
 {
-    [DbContext(typeof(TaskListContext))]
-    [Migration("20180216092827_InitialTaskListDB")]
-    partial class InitialTaskListDB
+    [DbContext(typeof(OnlineTaskListsContext))]
+    [Migration("20180218072006_InitalOnlineTaskListsDB")]
+    partial class InitalOnlineTaskListsDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,9 +21,9 @@ namespace OTL_API.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("OTL_API.Entities.TaskList", b =>
+            modelBuilder.Entity("OTL_API.Entities.UserTask", b =>
                 {
-                    b.Property<Guid>("TaskListID")
+                    b.Property<Guid>("UserTaskID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DateCreated");
@@ -37,9 +37,9 @@ namespace OTL_API.Migrations
 
                     b.Property<int>("UserID");
 
-                    b.HasKey("TaskListID");
+                    b.HasKey("UserTaskID");
 
-                    b.ToTable("TaskLists");
+                    b.ToTable("UserTasks");
                 });
 #pragma warning restore 612, 618
         }

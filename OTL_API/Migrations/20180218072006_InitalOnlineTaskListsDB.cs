@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 namespace OTL_API.Migrations
 {
-    public partial class InitialTaskListDB : Migration
+    public partial class InitalOnlineTaskListsDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "TaskLists",
+                name: "UserTasks",
                 columns: table => new
                 {
-                    TaskListID = table.Column<Guid>(nullable: false),
+                    UserTaskID = table.Column<Guid>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(maxLength: 50, nullable: true),
                     IsDone = table.Column<bool>(nullable: false),
@@ -21,14 +21,14 @@ namespace OTL_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TaskLists", x => x.TaskListID);
+                    table.PrimaryKey("PK_UserTasks", x => x.UserTaskID);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "TaskLists");
+                name: "UserTasks");
         }
     }
 }

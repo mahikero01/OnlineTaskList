@@ -33,13 +33,16 @@ namespace OTL_API
             //Use below in Production
             var connectionString = Startup.Configuration["ConnectionStrings:TaskListDBConnectionString"];
 
-            services.AddDbContext<TaskListContext>(o => o.UseSqlServer(connectionString));
+            services.AddDbContext<OnlineTaskListsContext>(o => o.UseSqlServer(connectionString));
 
-            services.AddScoped <IOnlineTaskListRepository, OnlineTaskListRepository>();
+            services.AddScoped <IOnlineTaskListsRepository, OnlineTaskListsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, TaskListContext taskListContext)
+        public void Configure(
+                IApplicationBuilder app, 
+                IHostingEnvironment env, 
+                OnlineTaskListsContext taskListContext)
         {
             if (env.IsDevelopment())
             {
@@ -52,7 +55,7 @@ namespace OTL_API
             AutoMapper.Mapper.Initialize(
                     cfg =>
                     {
-                        cfg.CreateMap<Entities.TaskList, Models.TaskListDTO>();
+                        //cfg.CreateMap<Entities.UserTask, Models.UserTaskLDTO>();
                     });
 
                         app.UseMvc();

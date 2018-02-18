@@ -6,33 +6,42 @@ using System.Threading.Tasks;
 
 namespace OTL_API
 {
-    public static class TaskListExtension
+    public static class OnlineTaskListsExtension
     {
-        public static void EnsureSeedDataForContext(this TaskListContext ctx)
+        public static void EnsureSeedDataForContext(this OnlineTaskListsContext ctx)
         {
             SeedTaskLists(ctx);
         }
-        private static void SeedTaskLists(TaskListContext ctx)
+        private static void SeedTaskLists(OnlineTaskListsContext ctx)
         {
-            if (ctx.TaskLists.Any())
+            if (ctx.UserTasks.Any())
             {
                 return;
             }
 
-            var taskLists = new List<TaskList>()
+            var userTaskLists = new List<UserTask>()
                     {
-                        new TaskList()
+                        new UserTask()
                         {
-                            TaskListID = new Guid(),
+                            UserTaskID = new Guid(),
                             UserID = 1,
                             Title = "Initial",
                             Description = "sample Description",
                             DateCreated = DateTime.Now,
                             IsDone = true
+                        },
+                        new UserTask()
+                        {
+                            UserTaskID = new Guid(),
+                            UserID = 1,
+                            Title = "Secondary",
+                            Description = "sample 2 Description",
+                            DateCreated = (DateTime.Now).AddDays(1),
+                            IsDone = true
                         }
                     };
 
-            ctx.TaskLists.AddRange(taskLists);
+            ctx.UserTasks.AddRange(userTaskLists);
             ctx.SaveChanges();
         }
     }

@@ -7,44 +7,40 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OTL_API.Services;
-using OTL_API.Models;
+using Microsoft.Extensions.Logging;
 
 namespace OTL_API.Controllers
 {
     //[Authorize]
     [Produces("application/json")]
-    [Route("api/TaskLists")]
-    public class TaskListsController : Controller
+    [Route("api/UserTasks")]
+    public class UserTasksController : Controller
     {
-        private IOnlineTaskListRepository _repo;
+        private ILogger<UserTasksController> _logger;
+        private IOnlineTaskListsRepository _repo;
 
-        public TaskListsController(IOnlineTaskListRepository repo)
+        public UserTasksController(
+                ILogger<UserTasksController> logger, 
+                IOnlineTaskListsRepository repo )
         {
+            _logger = logger;
             _repo = repo;
         }
 
-        [HttpGet("{userID}")]
+        [HttpGet]
         public IActionResult GetUserTasks(int userID)
         {
             try
             {
-                
-                if (!_repo.UserIDExist(userID))
-                {
-                    return NotFound();
-                }
+                var usertasksResults = _repo.ReadUserTasks();
 
-
-                var usertaskListResults =
-                        Mapper.Map<IEnumerable<TaskListDTO>>(_repo.ReadUserTasks(userID));
-
-                return Ok(usertaskListResults);
+                return Ok(usertasksResults);
             }
             catch (Exception ex)
             {
+                _logger.LogCritical("Error in GetUserTask : " + ex);
                 return StatusCode(500, "A problem happened while handling your request.");
             }
-
         }
     }
 }
