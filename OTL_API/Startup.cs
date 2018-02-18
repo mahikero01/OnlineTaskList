@@ -50,7 +50,7 @@ namespace OTL_API
             services.AddCors(
                     opt =>
                     {
-                        opt.AddPolicy("AllowWebClient", c => c.WithOrigins("http://localhost:50282/"));
+                        opt.AddPolicy("AllowWebClient", c => c.WithOrigins("https://localhost:44307/"));
                     });
 
             services.AddMvc();
