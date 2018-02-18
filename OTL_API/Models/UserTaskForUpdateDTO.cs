@@ -7,7 +7,7 @@ namespace OTL_API.Models
 {
     public class UserTaskForUpdateDTO
     {
-        public int UserID { get; set; }
+        public String UserID { get; set; }
 
         public String Title { get; set; }
 

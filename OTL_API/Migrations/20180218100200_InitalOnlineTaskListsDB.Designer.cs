@@ -11,7 +11,7 @@ using System;
 namespace OTL_API.Migrations
 {
     [DbContext(typeof(OnlineTaskListsContext))]
-    [Migration("20180218072006_InitalOnlineTaskListsDB")]
+    [Migration("20180218100200_InitalOnlineTaskListsDB")]
     partial class InitalOnlineTaskListsDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,8 @@ namespace OTL_API.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<int>("UserID");
+                    b.Property<string>("UserID")
+                        .HasMaxLength(450);
 
                     b.HasKey("UserTaskID");
 

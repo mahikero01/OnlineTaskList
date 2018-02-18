@@ -13,7 +13,8 @@ namespace OTL_API.Entities
         [Key]
         public Guid UserTaskID { get; set; }
 
-        public int UserID { get; set; }
+        [MaxLength(450)]
+        public String UserID { get; set; }
 
         public String Title { get; set; }
 

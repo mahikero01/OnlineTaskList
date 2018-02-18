@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace OTL_API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [EnableCors("AllowWebClient")]
     [Produces("application/json")]
     [Route("api/UserTasks")]

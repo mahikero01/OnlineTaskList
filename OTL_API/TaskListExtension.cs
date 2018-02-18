@@ -24,7 +24,7 @@ namespace OTL_API
                         new UserTask()
                         {
                             UserTaskID = new Guid(),
-                            UserID = 1,
+                            UserID = "3142b052-f32a-408a-ace9-f6a556e92c1b",
                             Title = "Initial",
                             Description = "sample Description",
                             DateCreated = DateTime.Now,
@@ -33,7 +33,7 @@ namespace OTL_API
                         new UserTask()
                         {
                             UserTaskID = new Guid(),
-                            UserID = 1,
+                            UserID = "3142b052-f32a-408a-ace9-f6a556e92c1b",
                             Title = "Secondary",
                             Description = "sample 2 Description",
                             DateCreated = (DateTime.Now).AddDays(1),

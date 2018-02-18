@@ -34,7 +34,8 @@ namespace OTL_API.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<int>("UserID");
+                    b.Property<string>("UserID")
+                        .HasMaxLength(450);
 
                     b.HasKey("UserTaskID");
 

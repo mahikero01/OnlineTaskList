@@ -17,7 +17,7 @@ namespace OTL_API.Migrations
                     Description = table.Column<string>(maxLength: 50, nullable: true),
                     IsDone = table.Column<bool>(nullable: false),
                     Title = table.Column<string>(nullable: true),
-                    UserID = table.Column<int>(nullable: false)
+                    UserID = table.Column<string>(maxLength: 450, nullable: true)
                 },
                 constraints: table =>
                 {
