@@ -16,6 +16,7 @@ using OTL_API.Services;
 using OTL_Client.Models;
 using OTL_Client.Models.ManageViewModels;
 
+
 namespace OTL_Client.Controllers
 {
     [Authorize]
@@ -56,6 +57,86 @@ namespace OTL_Client.Controllers
             return View(userTaskListResultSet);
         }
 
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            UserTask userTaskResultSet;
+
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            _webAPI.AssignAuth(user.UserName);
+            var result = await _webAPI.GetRequest(id);
+            var deserializeResult = JsonConvert.DeserializeObject<UserTask>(result.ToString());
+            userTaskResultSet = deserializeResult;
+            
+            return View(userTaskResultSet);
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            UserTask userTaskResultSet;
+
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            _webAPI.AssignAuth(user.UserName);
+            var result = await _webAPI.GetRequest(id);
+            var deserializeResult = JsonConvert.DeserializeObject<UserTask>(result.ToString());
+            userTaskResultSet = deserializeResult;
+
+            return View(userTaskResultSet);
+        }
+
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPost(UserTask userTask)
+        {
+            if (userTask == null)
+            {
+
+                return NotFound();
+            }
+
+            UserTaskForUpdateDTO userTaskUpdate = new UserTaskForUpdateDTO();
+            userTaskUpdate.UserID = userTask.UserID;
+            userTaskUpdate.Title = userTask.Title;
+            userTaskUpdate.Description = userTask.Description;
+            userTaskUpdate.IsDone = userTask.IsDone;
+            var userTaskSerialize = JsonConvert.SerializeObject(userTaskUpdate); 
+
+
+            var user = await _userManager.GetUserAsync(User);
+            UserTask userTaskToUpdate;
+
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+             _webAPI.AssignAuth(user.UserName);
+            await _webAPI.PutRequest(userTask.UserTaskID.ToString(), userTaskSerialize);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
         public async Task<UserTask[]> GetData()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -68,5 +149,7 @@ namespace OTL_Client.Controllers
             var result = await _webAPI.GetRequest();
             return JsonConvert.DeserializeObject<UserTask[]>(result.ToString());
         }
+
+        
     }
 }
