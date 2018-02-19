@@ -38,6 +38,16 @@ namespace OTL_API
                             Description = "sample 2 Description",
                             DateCreated = (DateTime.Now).AddDays(1),
                             IsDone = true
+                        },
+                        new UserTask()
+                        {
+                            UserTaskID = new Guid(),
+                            UserID = "00875856-227c-4649-90b9-4846e79d2730",
+                            Title = "Trionary",
+                            Description = "sample 3 Description",
+                            DateCreated = (DateTime.Now).AddDays(1),
+                            IsDone = true
+                            
                         }
                     };
 

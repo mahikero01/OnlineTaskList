@@ -34,7 +34,8 @@ namespace OTL_Client.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            //List<UserTask> userTaskList;
+            List<UserTask> userTaskList = new List<UserTask>();
+            IEnumerable<UserTask> userTaskListResultSet;
 
             if (user == null)
             {
@@ -43,9 +44,16 @@ namespace OTL_Client.Controllers
 
             _webAPI.AssignAuth(user.UserName);
             var result = await _webAPI.GetRequest();
-            var userTaskList = JsonConvert.DeserializeObject<UserTask[]>(result.ToString());
+            var deserializeResult = JsonConvert.DeserializeObject<UserTask[]>(result.ToString());
 
-            return View(userTaskList);
+            foreach (var userTask in deserializeResult)
+            {
+                userTaskList.Add(userTask);
+            }
+
+            userTaskListResultSet = userTaskList.Where(ut => ut.UserID == user.Id);
+
+            return View(userTaskListResultSet);
         }
 
         public async Task<UserTask[]> GetData()
