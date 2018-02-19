@@ -76,7 +76,7 @@ namespace OTL_Client.Controllers
             var result = await _webAPI.GetRequest(id);
             var deserializeResult = JsonConvert.DeserializeObject<UserTask>(result.ToString());
             userTaskResultSet = deserializeResult;
-            
+
             return View(userTaskResultSet);
         }
 
@@ -118,24 +118,55 @@ namespace OTL_Client.Controllers
             userTaskUpdate.Title = userTask.Title;
             userTaskUpdate.Description = userTask.Description;
             userTaskUpdate.IsDone = userTask.IsDone;
-            var userTaskSerialize = JsonConvert.SerializeObject(userTaskUpdate); 
+            var userTaskSerialize = JsonConvert.SerializeObject(userTaskUpdate);
 
 
             var user = await _userManager.GetUserAsync(User);
-            UserTask userTaskToUpdate;
 
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-             _webAPI.AssignAuth(user.UserName);
+            _webAPI.AssignAuth(user.UserName);
             await _webAPI.PutRequest(userTask.UserTaskID.ToString(), userTaskSerialize);
 
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(UserTask userTask)
+        {
+            if (userTask == null)
+            {
+
+                return NotFound();
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            UserTaskForCreateDTO userTaskCreate = new UserTaskForCreateDTO();
+            userTaskCreate.Title = userTask.Title;
+            userTaskCreate.Description = userTask.Description;
+            userTaskCreate.UserID = user.Id;
+            var userTaskSerialize = JsonConvert.SerializeObject(userTaskCreate);
+
+            _webAPI.AssignAuth(user.UserName);
+            await _webAPI.PostRequest(userTaskSerialize);
+
+            return RedirectToAction(nameof(Index));
+        }
 
         public async Task<UserTask[]> GetData()
         {

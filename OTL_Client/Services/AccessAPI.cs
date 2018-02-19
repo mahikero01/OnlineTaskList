@@ -135,5 +135,22 @@ namespace OTL_API.Services
                 return null;
             }
         }
+
+        public async Task<bool> DeleteRequest(string id)
+        {
+            bool isSuccess = false;
+            try
+            {
+                var request = await _client.DeleteAsync(_apiURL + "/" + id);
+
+                isSuccess = request.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
+
+            return isSuccess;
+        }
     }
 }
