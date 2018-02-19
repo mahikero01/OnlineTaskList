@@ -1,6 +1,19 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<h1>
-    Online Task List
-</h1>
+
+<br /><br /><br /><br /><br />
+
+<div class="row">
+    <div class="col-md-offset-4">
+        <h1>Online Task List</h1>                        
+    </div>                        
+</div>
+
+<br /><br /><br />
+
+<div class="row">
+    <div class="col-md-offset-4">
+        @Html.ActionLink("Check Current Tasks", "Index", "UserTasks", null, new { @class = "btn btn-primary btn-large" })
+    </div>                
+</div>

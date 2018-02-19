@@ -168,19 +168,24 @@ namespace OTL_Client.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<UserTask[]> GetData()
+        public async Task<IActionResult> Delete(string id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             var user = await _userManager.GetUserAsync(User);
+
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
             _webAPI.AssignAuth(user.UserName);
-            var result = await _webAPI.GetRequest();
-            return JsonConvert.DeserializeObject<UserTask[]>(result.ToString());
-        }
+            await _webAPI.DeleteRequest(id);
 
-        
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
